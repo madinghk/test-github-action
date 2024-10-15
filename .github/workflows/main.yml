@@ -1,14 +1,29 @@
 name: CI
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 jobs:
-  build:
+  without_env:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Echo MYCOLOR
+        run: echo "MYCOLOR is ${{ vars.MYCOLOR }}"
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Echo Show MYSECRET
+        run: echo "MYSECRET is ${{ secrets.MYSECRET }}"
+
+  with_env:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: dev
+      url: https://example.com
+
+    steps:
+      - name: Echo MYCOLOR
+        run: echo "MYCOLOR is ${{ vars.MYCOLOR }}"
+
+      - name: Echo Show MYSECRET
+        run: echo "MYSECRET is ${{ secrets.MYSECRET }}"
 
